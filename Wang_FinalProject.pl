@@ -48,6 +48,8 @@ while(my $row = $csv->getline($fh)) {
   }
 }
 
+
+my $esc = 0;
 do {
 my @list=('Top sales by Platform, Year, Genre and Publisher',
 'Top sales by Platform given the year',
@@ -101,10 +103,11 @@ print "SELECTION = $selection\n";
     }
     elsif($selection eq "Year with the lowest sale"){ 
         lowSales(); 
+    }elsif($selection eq "EXIT"){
+        $esc = 1;
     }
-    else { print "Invalid Selection"}
 
-}while($selection ne "Exit" || $selection ne "exit");
+}while($esc != 1);
 #Top overall
 sub topOverall{
 my $year;
