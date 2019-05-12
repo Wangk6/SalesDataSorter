@@ -20,9 +20,18 @@
 #       hash. It is important that the 'skip' was instantiated   #
 #       outside of the loop so it does not reset to our static   #
 #       value which default is 0.                                #
+#                                                                #
+#       Modules used:                                            #
+#              Text:CSV to read the Excel file                   #
+#              Spreadsheet::WriteExcel to write to Excel file    #
+#                                                                #
 ##################################################################
+
+
 use Text::CSV;
 use Term::Menus;
+use Term::ANSIColor qw(:constants);
+use Switch;
 
 my %games = ();
 my $counter = 1;
@@ -68,44 +77,46 @@ my $banner="  Please Pick an Item:";
 my $selection=&pick(\@list,$banner);
 print "SELECTION = $selection\n";
 
-	if($selection eq "Top sales by Platform, Year, Genre and Publisher"){ 
+	switch($selection){
+	case("Top sales by Platform, Year, Genre and Publisher"){ 
         topOverall();  
     }
-    elsif($selection eq "Top sales by Platform given the year"){ 
+    case("Top sales by Platform given the year"){ 
         topYearPlatform(); 
     }
-    elsif($selection eq "Top sales by Genre given the year"){ 
+    case("Top sales by Genre given the year"){ 
         topYearGenre();
     }
-    elsif($selection eq "Top sales by Publisher given the year"){ 
+    case("Top sales by Publisher given the year"){ 
         topYearPublisher();
     }
-    elsif($selection eq "Game with the lowest sales"){ 
+    case("Game with the lowest sales"){ 
         lowGameSales();
     }
-    elsif($selection eq "Game with the highest sales"){ 
+    case("Game with the highest sales"){ 
         highGameSales();
     }
-    elsif($selection eq "Platform with the lowest sales"){ 
+    case("Platform with the lowest sales"){ 
         lowPlatform(); 
     }
-    elsif($selection eq "Platform with the highest sales"){ 
+    case("Platform with the highest sales"){ 
         topPlatform();  
     }
-    elsif($selection eq "Publisher with the lowest sales"){
+    case("Publisher with the lowest sales"){
         lowPublisher(); 
     }
-    elsif($selection eq "Publisher with the highest sales"){
+    case("Publisher with the highest sales"){
         topPublisher(); 
     }
-    elsif($selection eq "Year with highest sales"){ 
+    case("Year with highest sales"){ 
         highSales(); 
     }
-    elsif($selection eq "Year with the lowest sale"){ 
+    case("Year with the lowest sale"){ 
         lowSales(); 
-    }elsif($selection eq "EXIT"){
+    }case("EXIT"){
         $esc = 1;
     }
+	}
 
 }while($esc != 1);
 #Top overall
@@ -139,10 +150,10 @@ my $skip = 0;
         }
     }
     if($highestPrice != 0){
-    print("The publisher with the highest sales is $pub, on $plat, releasing the game $gameName that is in genre $genre \n");
-    print("in $year with $highestPrice million in sales\n");
+    print GREEN, "The publisher with the highest sales is $pub, on $plat, releasing the game $gameName that is in genre $genre \n", RESET;
+    print GREEN, "in $year with $highestPrice million in sales\n", RESET;
     } else {
-        print("No games found");
+        print GREEN, "No games found", RESET;
     }
 }
 
@@ -170,9 +181,9 @@ my $skip = 0;
         }
     }
     if($highestPrice != 0){
-    print("The platform with the highest sales is $plat in $year\n");
+    print GREEN, "The platform with the highest sales is $plat in $year\n", RESET;
     } else {
-        print("No sales found");
+        print GREEN, "No sales found", RESET;
     }
 }
 
@@ -198,9 +209,9 @@ my $skip = 0;
         }
     }
     if($highestPrice != 0){
-    print("The platform with the highest sales is $plat\n");
+    print GREEN, "The platform with the highest sales is $plat\n", RESET;
     } else {
-        print("No platforms found");
+        print GREEN, "No platforms found", RESET;
     }
 }
 sub lowPlatform{
@@ -223,9 +234,9 @@ my $skip = 0;
         }
     }
     if($lowestPrice != 0){
-    print("The platform with the lowest sales is $plat\n");
+    print GREEN, "The platform with the lowest sales is $plat\n", RESET;
     } else {
-        print("No platforms found");
+        print GREEN, "No platforms found", RESET;
     }
 }
 #Top sales by Genre
@@ -247,9 +258,9 @@ my $genre;
         }
     }
     if($highestPrice != 0){
-    print("The genre with the highest sales is $genre\n");
+    print GREEN, "The genre with the highest sales is $genre\n", RESET;
     } else {
-        print("No games found");
+        print GREEN, "No games found", RESET;
     }
 }
 
@@ -276,9 +287,9 @@ my $skip = 0;
         }
     }
     if($highestPrice != 0){
-        print("The genre with the highest sales is $genre in $year\n");
+        print GREEN, "The genre with the highest sales is $genre in $year\n", RESET;
     } else {
-        print("No sales found");
+        print GREEN, "No sales found", RESET;
     }
 }
 
@@ -309,9 +320,9 @@ my $skip = 0;
         }
     }
     if($highestPrice != 0){
-    print("The publisher with the highest sales is $pub, releasing the game $gameName in $year with $highestPrice million in sales\n");
+    print GREEN, "The publisher with the highest sales is $pub, releasing the game $gameName in $year with $highestPrice million in sales\n", RESET;
     } else {
-        print("No games found");
+        print GREEN, "No games found", RESET;
     }
 }
 
@@ -333,9 +344,9 @@ my $pub;
         }
     }
     if($lowestPrice != 0){
-    print("The publisher with the lowest sales is $pub\n");
+    print GREEN, "The publisher with the lowest sales is $pub\n", RESET;
     } else {
-        print("No games found");
+        print GREEN, "No games found", RESET;
     }
 }
 
@@ -357,9 +368,9 @@ my $pub;
         }
     }
     if($highestPrice != 0){
-    print("The publisher with the highest sales is $pub\n");
+    print GREEN, "The publisher with the highest sales is $pub\n", RESET;
     } else {
-        print("No games found");
+        print GREEN, "No games found", RESET;
     }
 }
 
@@ -380,7 +391,7 @@ my $gameName;
         }
     }
 
-    print("The game with the lowest sales is $gameName.\n");
+    print GREEN, "The game with the lowest sales is $gameName.\n", RESET;
 }
 sub highGameSales{
 my $highestPrice;
@@ -399,7 +410,7 @@ my $gameName;
         }
     }
 
-    print("The game with the lowest sales is $gameName.\n");
+    print GREEN, "The game with the lowest sales is $gameName.\n", RESET;
 }
 #Game with the lowest sales - Return last rank
 sub lowSales{
@@ -418,7 +429,7 @@ my $lowestPrice;
         }
     }
 
-    print("The game with the lowest sales is $lowestPrice million in sales.\n");
+    print GREEN, "The game with the lowest sales is $lowestPrice million in sales.\n", RESET;
 }
 #Game with the highest sales - Return rank 1
 sub highSales{
@@ -435,5 +446,5 @@ my $highestPrice;
         }
     }
 
-    print("The game with the highest sales is $highestPrice million in sales\n");
+    print GREEN, "The game with the highest sales is $highestPrice million in sales\n", RESET;
 }
