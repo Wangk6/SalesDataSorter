@@ -1,7 +1,7 @@
 # VideoGameSorter
 Perl program to sort a large excel sheet of data
 
-Displays:
+Displays:<br/>
 'Top sales by Platform, Year, Genre and Publisher'<br/>
 'Top sales by Platform given the year'<br/>
 'Top sales by Genre given the year'<br/>
